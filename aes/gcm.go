@@ -11,7 +11,7 @@ import (
 const GcmNonceLength = 12
 
 // EncryptGCM encrypts the given data using AES GCM algorithm with the given key.
-func EncryptGCM(key []byte, data []byte) ([]byte, error) {
+func EncryptGCM(key Key, data []byte) (CipherText, error) {
 	// create a new cipher block
 	block, err := aes.NewCipher(key)
 	if err != nil {
@@ -39,7 +39,7 @@ func EncryptGCM(key []byte, data []byte) ([]byte, error) {
 }
 
 // DecryptGCM decrypts the given data using AES GCM algorithm with the given key.
-func DecryptGCM(key []byte, cipherText []byte) ([]byte, error) {
+func DecryptGCM(key Key, cipherText CipherText) ([]byte, error) {
 	// create a new cipher block
 	block, err := aes.NewCipher(key)
 	if err != nil {
