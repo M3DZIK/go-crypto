@@ -20,7 +20,7 @@ func GenerateKey() (*KeyPair, error) {
 
 // PublicFromPrivate returns the public key corresponding to the given private key.
 func PublicFromPrivate(privateKey PrivateKey) (PublicKey, error) {
-	key, err := ecdh.X25519().NewPrivateKey(privateKey)
+	key, err := privateKey.toECDH()
 	if err != nil {
 		return nil, err
 	}
@@ -30,12 +30,12 @@ func PublicFromPrivate(privateKey PrivateKey) (PublicKey, error) {
 
 // ComputeSharedSecret returns a shared secret between the two given keys.
 func ComputeSharedSecret(outPrivate PrivateKey, theirPublic PublicKey) (SharedSecret, error) {
-	ourKey, err := ecdh.X25519().NewPrivateKey(outPrivate)
+	ourKey, err := outPrivate.toECDH()
 	if err != nil {
 		return nil, err
 	}
 
-	theirKey, err := ecdh.X25519().NewPublicKey(theirPublic)
+	theirKey, err := theirPublic.toECDH()
 	if err != nil {
 		return nil, err
 	}
