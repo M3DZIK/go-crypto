@@ -1,12 +1,12 @@
-package crypto_test
+package random_test
 
 import (
-	"go.medzik.dev/crypto"
+	"go.medzik.dev/crypto/random"
 	"testing"
 )
 
-func TestGenerateSalt(t *testing.T) {
-	salt, err := crypto.GenerateSalt(16)
+func TestBytes(t *testing.T) {
+	salt, err := random.Bytes(16)
 	if err != nil {
 		t.Error(err)
 	}
