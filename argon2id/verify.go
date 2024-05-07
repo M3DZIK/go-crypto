@@ -6,13 +6,13 @@ import "bytes"
 // Returns true if the password matches the hash, false otherwise.
 func Verify(password []byte, hash *Hash) bool {
 	hasher := Hasher{
-		memory:      hash.memory,
-		iterations:  hash.iterations,
-		parallelism: hash.parallelism,
-		hashLength:  uint32(len(hash.hash)),
+		Memory:      hash.Memory,
+		Iterations:  hash.Iterations,
+		Parallelism: hash.Parallelism,
+		HashLength:  uint32(len(hash.Hash)),
 	}
 
-	passwordHash := hasher.Hash(password, hash.salt)
+	passwordHash := hasher.Hash(password, hash.Salt)
 
-	return bytes.Equal(passwordHash.hash, hash.hash)
+	return bytes.Equal(passwordHash.Hash, hash.Hash)
 }

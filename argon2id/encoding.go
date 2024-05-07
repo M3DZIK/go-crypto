@@ -14,9 +14,9 @@ func (hash *Hash) Encode() string {
 	var sb strings.Builder
 
 	sb.WriteString("$argon2id")
-	sb.WriteString(fmt.Sprintf("$v=%d$m=%d,t=%d,p=%d", argon2.Version, hash.memory, hash.iterations, hash.parallelism))
-	sb.WriteString(fmt.Sprintf("$%s", hash.salt))
-	sb.WriteString(fmt.Sprintf("$%s", hash.hash))
+	sb.WriteString(fmt.Sprintf("$v=%d$m=%d,t=%d,p=%d", argon2.Version, hash.Memory, hash.Iterations, hash.Parallelism))
+	sb.WriteString(fmt.Sprintf("$%s", hash.Salt))
+	sb.WriteString(fmt.Sprintf("$%s", hash.Hash))
 
 	return sb.String()
 }
@@ -52,7 +52,7 @@ func Decode(encodedHash string) (*Hash, error) {
 			return nil, ErrInvalidHash
 		}
 
-		hash.memory = uint32(num)
+		hash.Memory = uint32(num)
 	}
 
 	if strings.HasPrefix(performanceParams[1], "t=") {
@@ -61,7 +61,7 @@ func Decode(encodedHash string) (*Hash, error) {
 			return nil, ErrInvalidHash
 		}
 
-		hash.iterations = uint32(num)
+		hash.Iterations = uint32(num)
 	}
 
 	if strings.HasPrefix(performanceParams[2], "p=") {
@@ -70,7 +70,7 @@ func Decode(encodedHash string) (*Hash, error) {
 			return nil, ErrInvalidHash
 		}
 
-		hash.parallelism = uint8(num)
+		hash.Parallelism = uint8(num)
 	}
 
 	salt, err := base64.RawStdEncoding.DecodeString(parts[4])
@@ -78,7 +78,7 @@ func Decode(encodedHash string) (*Hash, error) {
 		return nil, ErrInvalidHash
 	}
 
-	hash.salt = salt
+	hash.Salt = salt
 
 	hashBytes, err := base64.RawStdEncoding.DecodeString(parts[5])
 	if err != nil {
@@ -86,7 +86,7 @@ func Decode(encodedHash string) (*Hash, error) {
 		return nil, ErrInvalidHash
 	}
 
-	hash.hash = hashBytes
+	hash.Hash = hashBytes
 
 	return hash, nil
 }
